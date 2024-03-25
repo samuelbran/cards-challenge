@@ -6,7 +6,7 @@ describe('Page', () => {
   it('renders a path to file', () => {
     render(<Page />);
 
-    const heading = screen.getByText('app/page.tsx');
+    const heading = screen.getByText('Welcome');
 
     expect(heading).toBeInTheDocument();
   });
