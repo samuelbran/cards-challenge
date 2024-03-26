@@ -12,10 +12,8 @@ export function ThemeConfig({
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main">
-        <CssBaseline />
-        {children}
-      </Container>
+      <CssBaseline />
+      {children}
     </ThemeProvider>
   );
 }
