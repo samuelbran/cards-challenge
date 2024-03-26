@@ -1,6 +1,6 @@
 'use client';
 
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -14,8 +14,9 @@ import Container from '@mui/material/Container';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MainListItems, SecondaryListItems } from './ListItems';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const drawerWidth: number = 240;
 
@@ -72,10 +73,21 @@ export function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('sm'));
+
   const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  useEffect(() => {
+    if (matches) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
+  }, [matches]);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -146,7 +158,7 @@ export function DashboardLayout({
         }}
       >
         <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
           {children}
         </Container>
       </Box>

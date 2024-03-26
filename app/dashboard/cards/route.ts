@@ -1,16 +1,21 @@
 import { faker } from '@faker-js/faker';
 import { NextRequest } from 'next/server';
-import { Card } from '@/types/Card';
+import { CCard } from '@/types/Card';
 
-function createRandomCard(): Card {
-  const issuer = 'visa';
+function createRandomCard(): CCard {
+  const issuer = faker.finance.creditCardIssuer();
+  const cardNumber = faker.finance
+    .creditCardNumber({ issuer })
+    .replace(/-/g, '');
 
   return {
     id: faker.string.uuid(),
     cardName: 'Lee Sang-hyeok',
-    cardNumber: faker.finance.creditCardNumber({ issuer }),
+    cardNumber,
     cvv: faker.finance.creditCardCVV(),
-    expiryDate: faker.date.future({ years: 4 }),
+    expiryDate: faker.date
+      .future({ years: 4 })
+      .toLocaleString('en-US', { year: '2-digit', month: '2-digit' }),
     issuer,
     status: faker.helpers.arrayElement([
       'active',
@@ -25,7 +30,7 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const countParam = searchParams.get('count');
   const count = countParam ? parseInt(countParam) : 1;
-  let cards: Card[] = [];
+  let cards: CCard[] = [];
 
   for (let index = 0; index < count; index++) {
     const card = createRandomCard();
