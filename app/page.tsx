@@ -1,5 +1,11 @@
-import Typography from '@mui/material/Typography';
+import { SignInForm } from '@/components/SignInForm';
+import { signIn } from '@/actions/signIn';
+import { Container } from '@mui/material';
 
 export default async function Home() {
-  return <Typography variant="h4">Welcome</Typography>;
+  return (
+    <Container maxWidth="xs">
+      <SignInForm />
+    </Container>
+  );
 }
