@@ -3,10 +3,11 @@ import type { NextRequest } from 'next/server';
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-  const { cookies } = request;
+  const { cookies, headers } = request;
   const { redirect } = NextResponse;
 
-  const Authorization = cookies.get('Authorization')?.value;
+  const Authorization =
+    cookies.get('Authorization')?.value || headers.get('Authorization');
 
   /**
    * DASHBOARD ROUTES
