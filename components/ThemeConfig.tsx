@@ -1,6 +1,7 @@
 'use client';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Container, CssBaseline } from '@mui/material';
 
 export function ThemeConfig({
   children,
@@ -9,5 +10,12 @@ export function ThemeConfig({
 }>) {
   const defaultTheme = createTheme();
 
-  return <ThemeProvider theme={defaultTheme}>{children}</ThemeProvider>;
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main">
+        <CssBaseline />
+        {children}
+      </Container>
+    </ThemeProvider>
+  );
 }
