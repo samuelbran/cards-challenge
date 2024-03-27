@@ -1,12 +1,17 @@
 import userEvent from '@testing-library/user-event';
 import { faker } from '@faker-js/faker';
 import { CardListItem } from '@/app/dashboard/components/CardListItem';
-import { CCard } from '@/types/Card';
+import { CCard, CardIssuer } from '@/types/Card';
 import { render, screen, waitFor } from '@testing-library/react';
 
 faker.seed(123);
 
-const issuer = faker.finance.creditCardIssuer();
+const issuer: CardIssuer = faker.helpers.arrayElement([
+  'visa',
+  'mastercard',
+  'american_express',
+]);
+
 let mockCard: CCard = {
   id: 1,
   cardName: 'Lee Sang-hyeok',

@@ -1,11 +1,11 @@
 import { faker } from '@faker-js/faker';
-import { CCard, CardStatus } from '@/types/Card';
+import { CCard, CardIssuer, CardStatus } from '@/types/Card';
 
 export function createRandomCard(seed: number): CCard {
   // set the seed so we get consistent data
   faker.seed(seed);
 
-  const issuer = faker.helpers.arrayElement([
+  const issuer: CardIssuer = faker.helpers.arrayElement([
     'visa',
     'mastercard',
     'american_express',
