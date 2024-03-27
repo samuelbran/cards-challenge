@@ -1,4 +1,5 @@
 export type CardStatus = 'active' | 'expired' | 'stolen' | 'locked';
+export type CardIssuer = 'visa' | 'mastercard' | 'american_express';
 
 export interface CCard {
   id: number;
@@ -6,7 +7,7 @@ export interface CCard {
   cardNumber: string;
   expiryDate: string;
   cvv: string;
-  issuer: string;
+  issuer: CardIssuer;
   status: CardStatus;
 }
 
@@ -17,10 +18,18 @@ export const CardStatusEnum: Record<CardStatus, string> = {
   expired: 'Expired',
 } as const;
 
-export const CardStatusColor: Record<CardStatus, React.CSSProperties['color']> =
-  {
-    active: '#1FAD8A',
-    locked: '#EFBF1F',
-    stolen: '#000000',
-    expired: '#EB330A',
-  } as const;
+export const CardIssuerEnum: Record<CardIssuer, string> = {
+  visa: 'Visa',
+  mastercard: 'MasterCard',
+  american_express: 'American Express',
+} as const;
+
+export const CardStatusColorEnum: Record<
+  CardStatus,
+  React.CSSProperties['color']
+> = {
+  active: '#1FAD8A',
+  locked: '#EFBF1F',
+  stolen: '#000000',
+  expired: '#EB330A',
+} as const;

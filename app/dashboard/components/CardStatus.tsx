@@ -1,4 +1,4 @@
-import { CardStatus, CardStatusColor, CardStatusEnum } from '@/types/Card';
+import { CardStatus, CardStatusColorEnum, CardStatusEnum } from '@/types/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
@@ -14,7 +14,7 @@ function Indicator({ status }: Props) {
         width: 16,
         height: 16,
         borderRadius: 50,
-        background: CardStatusColor[status],
+        background: CardStatusColorEnum[status],
       }}
     />
   );
