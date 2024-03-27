@@ -1,13 +1,14 @@
+import userEvent from '@testing-library/user-event';
 import { faker } from '@faker-js/faker';
 import { CardListItem } from '@/app/dashboard/components/CardListItem';
 import { CCard } from '@/types/Card';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 
 faker.seed(123);
 
 const issuer = faker.finance.creditCardIssuer();
 let mockCard: CCard = {
-  id: faker.string.uuid(),
+  id: 1,
   cardName: 'Lee Sang-hyeok',
   cardNumber: faker.finance.creditCardNumber({ issuer }).replace(/-/g, ''),
   cvv: faker.finance.creditCardCVV(),
@@ -18,14 +19,29 @@ let mockCard: CCard = {
   status: faker.helpers.arrayElement(['active', 'expired', 'stolen', 'locked']),
 };
 
-describe('Navigation ListItem', () => {
+describe('CardListItem', () => {
   it('renders correctly', () => {
     render(<CardListItem card={mockCard} />);
   });
 
-  it('renders name in card', () => {
+  it('does not render card details by default', () => {
     render(<CardListItem card={mockCard} />);
 
-    expect(screen.queryByText(mockCard.cardName)).toBeInTheDocument();
+    expect(screen.queryByText(mockCard.cardName)).toBeNull();
+    expect(screen.queryByText(mockCard.cardNumber)).toBeNull();
+    expect(screen.queryByText(mockCard.expiryDate)).toBeNull();
+  });
+
+  it('render card details upon user interaction', async () => {
+    const user = userEvent.setup();
+    render(<CardListItem card={mockCard} />);
+
+    await user.click(screen.getByTestId('visibility-toggle'));
+
+    waitFor(() => {
+      expect(screen.queryByText(mockCard.cardName)).toBeInTheDocument();
+      expect(screen.queryByText(mockCard.cardNumber)).toBeInTheDocument();
+      expect(screen.queryByText(mockCard.expiryDate)).toBeInTheDocument();
+    });
   });
 });

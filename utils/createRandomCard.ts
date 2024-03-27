@@ -5,7 +5,11 @@ export function createRandomCard(seed: number): CCard {
   // set the seed so we get consistent data
   faker.seed(seed);
 
-  const issuer = faker.finance.creditCardIssuer();
+  const issuer = faker.helpers.arrayElement([
+    'visa',
+    'mastercard',
+    'american_express',
+  ]);
   const cardNumber = faker.finance
     .creditCardNumber({ issuer })
     .replace(/-/g, '');
