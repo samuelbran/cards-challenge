@@ -1,14 +1,17 @@
 import { CCard, CardIssuerEnum } from '@/types/Card';
 import Stack from '@mui/material/Stack';
 import CardUI from 'react-credit-cards-2';
-import { CardStatusView } from './CardStatus';
+import { CardStatusView } from '../CardStatus';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
+import IconButton from '@mui/material/IconButton';
 import { useState } from 'react';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import IconButton from '@mui/material/IconButton';
-import { CardContent, Tooltip, Typography } from '@mui/material';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import { CardListItemActions } from './actions';
 
 type Props = {
   card: CCard;
@@ -21,8 +24,6 @@ export function CardListItem({ card }: Props) {
     : `**** **** **** ${card.cardNumber.slice(-4)}`;
   const cardExpiry = preview ? card.expiryDate : '00/00';
   const cardName = preview ? card.cardName : 'Card Owner';
-  const isExpiredOrStolen =
-    card.status === 'expired' || card.status === 'stolen';
 
   const toggleVisibility = () => setPreview((prev) => !prev);
 
@@ -74,27 +75,7 @@ export function CardListItem({ card }: Props) {
             style={{ width: '100%' }}
           >
             <CardStatusView status={card.status} />
-
-            <Stack direction="row" spacing={2}>
-              <Button
-                variant="outlined"
-                size="small"
-                color="error"
-                disabled={isExpiredOrStolen}
-              >
-                Report Stolen
-              </Button>
-              {card.status === 'locked' && (
-                <Button
-                  variant="outlined"
-                  size="small"
-                  color="warning"
-                  disabled={isExpiredOrStolen}
-                >
-                  Unlock
-                </Button>
-              )}
-            </Stack>
+            <CardListItemActions card={card} />
           </Stack>
         </CardActions>
       </Card>

@@ -11,6 +11,12 @@ export interface CCard {
   status: CardStatus;
 }
 
+export interface CCardDetails extends CCard {
+  outstanding_balance: string;
+  available_credit: string;
+  next_payment: string;
+}
+
 export const CardStatusEnum: Record<CardStatus, string> = {
   active: 'Active',
   locked: 'Locked',
