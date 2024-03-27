@@ -1,7 +1,7 @@
 export type CardStatus = 'active' | 'expired' | 'stolen' | 'locked';
 
 export interface CCard {
-  id: string;
+  id: number;
   cardName: string;
   cardNumber: string;
   expiryDate: string;
