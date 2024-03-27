@@ -60,6 +60,13 @@ describe('CardListItem', () => {
     expect(screen.queryByText('Report Stolen')).toBeInTheDocument();
   });
 
+  it('should render enabled Report stolen button if card status is active', () => {
+    mockCard.status = 'active';
+    render(<CardListItem card={mockCard} />);
+
+    expect(screen.queryByText('Report Stolen')).toBeEnabled();
+  });
+
   it('Report stolen button should be disabled if card status is stolen', () => {
     mockCard.status = 'stolen';
     render(<CardListItem card={mockCard} />);
@@ -79,5 +86,12 @@ describe('CardListItem', () => {
     render(<CardListItem card={mockCard} />);
 
     expect(screen.queryByText('Unlock')).toBeInTheDocument();
+  });
+
+  it('should NOT render Unlock button if card status is not locked', () => {
+    mockCard.status = 'active';
+    render(<CardListItem card={mockCard} />);
+
+    expect(screen.queryByText('Unlock')).toBeNull();
   });
 });
