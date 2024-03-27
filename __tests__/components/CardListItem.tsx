@@ -20,6 +20,15 @@ let mockCard: CCard = {
 };
 
 describe('CardListItem', () => {
+  afterEach(() => {
+    mockCard.status = faker.helpers.arrayElement([
+      'active',
+      'expired',
+      'stolen',
+      'locked',
+    ]);
+  });
+
   it('renders correctly', () => {
     render(<CardListItem card={mockCard} />);
   });
@@ -43,5 +52,32 @@ describe('CardListItem', () => {
       expect(screen.queryByText(mockCard.cardNumber)).toBeInTheDocument();
       expect(screen.queryByText(mockCard.expiryDate)).toBeInTheDocument();
     });
+  });
+
+  it('should render Report stolen button', () => {
+    render(<CardListItem card={mockCard} />);
+
+    expect(screen.queryByText('Report Stolen')).toBeInTheDocument();
+  });
+
+  it('Report stolen button should be disabled if card status is stolen', () => {
+    mockCard.status = 'stolen';
+    render(<CardListItem card={mockCard} />);
+
+    expect(screen.queryByText('Report Stolen')).toBeDisabled();
+  });
+
+  it('Report stolen button should be disabled if card status is expired', () => {
+    mockCard.status = 'expired';
+    render(<CardListItem card={mockCard} />);
+
+    expect(screen.queryByText('Report Stolen')).toBeDisabled();
+  });
+
+  it('should render Unlock button if card status is locked', () => {
+    mockCard.status = 'locked';
+    render(<CardListItem card={mockCard} />);
+
+    expect(screen.queryByText('Unlock')).toBeInTheDocument();
   });
 });

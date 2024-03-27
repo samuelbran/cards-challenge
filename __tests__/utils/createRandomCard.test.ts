@@ -6,10 +6,10 @@ let seed = 5;
 let mockCard: CCard = {
   id: seed,
   cardName: 'Lee Sang-hyeok',
-  cardNumber: '30582399406371',
+  cardNumber: '4882399406377',
   cvv: '429',
   expiryDate: '09/23',
-  issuer: 'diners_club',
+  issuer: 'visa',
   status: 'expired',
 };
 

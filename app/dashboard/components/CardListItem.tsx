@@ -19,6 +19,8 @@ export function CardListItem({ card }: Props) {
   const cardNumber = preview ? card.cardNumber : '**** **** **** ****';
   const cardExpiry = preview ? card.expiryDate : '00/00';
   const cardName = preview ? card.cardName : 'Card Owner';
+  const isExpiredOrStolen =
+    card.status === 'expired' || card.status === 'stolen';
 
   const toggleVisibility = () => setPreview((prev) => !prev);
 
@@ -42,19 +44,39 @@ export function CardListItem({ card }: Props) {
             justifyContent="space-between"
             style={{ width: '100%' }}
           >
-            <CardStatusView status={card.status} />
-            <Stack direction="row" spacing={2}>
-              <Tooltip title={preview ? 'Hide details' : 'View details'}>
-                <IconButton
-                  onClick={toggleVisibility}
-                  data-testid="visibility-toggle"
+            <Stack direction="column" spacing={1} style={{ width: '100%' }}>
+              <Stack direction="row" spacing={2} justifyContent="space-between">
+                <CardStatusView status={card.status} />
+                <Tooltip title={preview ? 'Hide details' : 'View details'}>
+                  <IconButton
+                    onClick={toggleVisibility}
+                    data-testid="visibility-toggle"
+                  >
+                    {preview ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </Tooltip>
+              </Stack>
+
+              <Stack direction="row" spacing={2}>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  color="error"
+                  disabled={isExpiredOrStolen}
                 >
-                  {preview ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </Tooltip>
-              <Button variant="contained" size="small">
-                Manage
-              </Button>
+                  Report Stolen
+                </Button>
+                {card.status === 'locked' && (
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    color="warning"
+                    disabled={isExpiredOrStolen}
+                  >
+                    Unlock
+                  </Button>
+                )}
+              </Stack>
             </Stack>
           </Stack>
         </CardActions>
