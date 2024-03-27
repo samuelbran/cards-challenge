@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest --onlyChanged",
+    "test:all": "jest",
     "test:watch": "jest --watch"
   },
   "dependencies": {
