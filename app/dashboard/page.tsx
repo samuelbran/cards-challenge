@@ -1,3 +1,15 @@
+/**
+ * This page uses NextJS way of fetching data, since this component is running
+ * in the server we don't have to make use of useEffect.
+ *
+ * Everytime the searchParams change this page refreshes so we have to revalidate
+ * the data (clear cache) we have fetched to get fresh new data based on the count
+ * param.
+ *
+ * When the user gets to view the page the data has been fetched and ready to
+ * display.
+ */
+
 import { fetchCards } from '@/actions/cards';
 import { CardTags } from '@/actions/tags';
 import { PageLayout } from '@/components/PageLayout';
@@ -22,8 +34,6 @@ export default async function Page({ searchParams }: Props) {
   revalidateTag(CardTags.all);
   const { count } = searchParams;
 
-  // Since we're using Next 14 and this component is running in the server, we
-  // don't need useEffect to fetch the data.
   const cards: CCard[] = await fetchCards({ count, Authorization });
 
   return (
