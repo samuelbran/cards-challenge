@@ -37,7 +37,7 @@ export default async function Page({ searchParams }: Props) {
   const cards: CCard[] = await fetchCards({ count, Authorization });
 
   return (
-    <PageLayout title="Your cards">
+    <PageLayout title="Your cards" showBackButton={false}>
       <Stack direction="column" marginBottom={4}>
         <CountSelector />
       </Stack>
