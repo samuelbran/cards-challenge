@@ -12,6 +12,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import { CardListItemActions } from './actions';
+import Link from 'next/link';
 
 type Props = {
   card: CCard;
@@ -53,16 +54,34 @@ export function CardListItem({ card }: Props) {
                   : cardNumber}
               </Typography>
             </div>
-            <div>
-              <Tooltip title="Quick view">
-                <IconButton
-                  onClick={toggleVisibility}
-                  data-testid="visibility-toggle"
+            <Stack
+              direction="row"
+              spacing={1}
+              justifyContent="flex-end"
+              alignItems="center"
+            >
+              <div>
+                <Tooltip title="Quick view">
+                  <IconButton
+                    onClick={toggleVisibility}
+                    data-testid="visibility-toggle"
+                  >
+                    {preview ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </Tooltip>
+              </div>
+
+              <div>
+                <Button
+                  size="small"
+                  variant="text"
+                  LinkComponent={Link}
+                  href={`/dashboard/cards/${card.id}/details`}
                 >
-                  {preview ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </Tooltip>
-            </div>
+                  Details
+                </Button>
+              </div>
+            </Stack>
           </Stack>
         </CardContent>
 

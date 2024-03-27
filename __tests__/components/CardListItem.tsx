@@ -99,4 +99,10 @@ describe('CardListItem', () => {
 
     expect(screen.queryByText('Unlock')).toBeNull();
   });
+
+  it('should render Details link', () => {
+    render(<CardListItem card={mockCard} />);
+
+    expect(screen.queryByText('Details')).toBeInTheDocument();
+  });
 });
