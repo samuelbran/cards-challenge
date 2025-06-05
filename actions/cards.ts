@@ -16,6 +16,7 @@ export async function fetchCards({ count = '5', Authorization }: Props) {
       },
       next: {
         tags: [CardTags.all],
+        revalidate: 3600,
       },
     }
   );
