@@ -23,7 +23,7 @@ export async function fetchCards({ count = '5', Authorization }: Props) {
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data');
+    throw new Error(`We couldn't retrieve your cards information`);
   }
 
   return res.json();
